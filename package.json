@@ -1,0 +1,23 @@
+{
+  "name": "fcc_pomodoro_clock",
+  "version": "1.0.0",
+  "description": "Pomodoro Clock app for freeCodeCamp",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/r3b311i0n/fCC_Pomodoro_Clock.git"
+  },
+  "keywords": [
+    "fcc",
+    "pomodoro"
+  ],
+  "author": "r3b311i0n",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/r3b311i0n/fCC_Pomodoro_Clock/issues"
+  },
+  "homepage": "https://github.com/r3b311i0n/fCC_Pomodoro_Clock#readme"
+}
