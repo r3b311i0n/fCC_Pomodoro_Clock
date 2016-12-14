@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css?family=Dancing+Script');
+
+body {
+    background-color: #111;
+    color: #c6372e;
+}
+
+header {
+    font-family: 'Dancing Script', cursive;
+}
+
+header .h1 {
+    font-size: 5em;
+    cursor: default;
+}
+
+footer {
+    bottom: 0;
+    position: absolute;
+    width: 100%;
+    color: #f1f1f1;
+}
+
+footer p {
+    padding-top: 1em;
+}
+
+a {
+    color: #c6372e;
+}
+
+a:hover {
+    color: #e5e5ec;
+    text-decoration: none;
+}
+
+a:link {
+    color: #c6372e;
+    text-decoration: none;
+}
+
+a:visited {
+    color: #c6372e;
+    text-decoration: none;
+}
+
+a:visited:hover {
+    color: #e5e5ec;
+    text-decoration: none;
+}
+
+.button {
+    font-size: 1.4em;
+    padding-left: 1.1em;
+    padding-right: 1.1em;
+}
+
+.mousePtr {
+    cursor: default;
+}
