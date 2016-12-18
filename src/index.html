@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>fCC Pomodoro Clock</title>
+    <link href="https://fonts.googleapis.com/css?family=Graduate|Dancing+Script|Signika" rel="stylesheet">
     <!--<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"-->
     <!--integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">-->
     <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
@@ -17,13 +18,16 @@
     <main>
         <div class="row">
             <div class="col-xs-12">
-                <div class="glassBox text-center"><div class="glass"></div>
-                <div class="stuff"></div></div>
+                <div class="timerBox">
+                    <div class="timer text-center">
+                        25
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row text-center">
             <div class="col-xs-6 button mousePtr">
-                <a href="#" class="button" id="breakMinBtn">-</a>
+                <a href="#" class="button" id="breakMin">-</a>
                 Break Length
                 <a href="#" class="button" id="breakPlus">+</a>
             </div>
@@ -35,17 +39,17 @@
         </div>
         <div class="row text-center">
             <div class="col-xs-6">
-                <p class="button mousePtr">5</p>
+                <p class="button mousePtr break">5</p>
             </div>
             <div class="col-xs-6">
-                <p class="button mousePtr">25</p>
+                <p class="button mousePtr session">25</p>
             </div>
         </div>
     </main>
 </div>
 <footer>
     <p class="text-center small">
-        <small>Made by r3b311i0n</small>
+        <small>made by r3b311i0n</small>
     </p>
 </footer>
 </body>

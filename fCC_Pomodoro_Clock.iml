@@ -22,6 +22,5 @@
     <orderEntry type="library" name="html-webpack-plugin-DefinitelyTyped" level="application" />
     <orderEntry type="library" name="webpack-DefinitelyTyped" level="application" />
     <orderEntry type="library" name="webpack-dev-server-DefinitelyTyped" level="application" />
-    <orderEntry type="library" name="jQuery-2.0.0" level="application" />
   </component>
 </module>
