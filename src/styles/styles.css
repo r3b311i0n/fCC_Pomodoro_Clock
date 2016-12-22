@@ -25,6 +25,7 @@ footer p {
 
 a {
     color: #c6372e;
+    transition: color 0.5s;
 }
 
 a:hover {
@@ -73,5 +74,4 @@ a:visited:hover {
 .timer {
     font-family: 'Graduate', cursive;
     font-size: 23rem;
-    cursor: default;
 }
