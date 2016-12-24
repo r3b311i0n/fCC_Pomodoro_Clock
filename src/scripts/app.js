@@ -9,6 +9,8 @@ class Pomodoro {
     breakPlus;
     breakMin;
     mins;
+    secs = 59;
+    pause;
 
     constructor() {
         this.sessionPlus = document.getElementById("sessionPlus");
@@ -26,29 +28,41 @@ class Pomodoro {
         this.timer[0].addEventListener("click", this.timerClick);
     }
 
-    minCountdown() {
+    async minCountdown() {
         if (this.mins < 0) {
-            return;
+            return new Promise();
         }
 
-        this.timer[0].innerHTML = this.mins + "." + 10;
-        this.secCountdown();
+        this.timer[0].innerHTML = this.mins + "." + this.secs;
+        await this.secCountdown();
+        return new Promise();
     }
 
-    secCountdown(secs = 10) {
-        if (secs < 0) {
+    async secCountdown() {
+        if (this.secs < 0) {
+            this.secs = 59;
             --this.mins;
-            this.minCountdown();
+            await this.minCountdown();
+            return new Promise();
         }
 
-        this.timer[0].innerHTML = this.mins + "." + secs;
-        setTimeout(() => {
-            this.secCountdown(--secs);
-        }, 1000);
+        this.timer[0].innerHTML = this.mins + "." + this.secs;
+        return new Promise(async() => {
+            this.pause = window.setTimeout(async() => {
+                --this.secs;
+                await this.secCountdown();
+                resolve();
+            }, 1000);
+        });
     }
 
-    timerClick = () => {
+    timerClick = async() => {
+        if (parseInt(this.timer[0].innerHTML) === 0) {
+            return new Promise();
+        }
+
         this.timer[0].removeEventListener("click", this.timerClick);
+        this.timer[0].addEventListener("click", this.pauseTimer);
         this.sessionPlus.removeEventListener("click", this.sessionAdd);
         this.sessionMin.removeEventListener("click", this.sessionSub);
         this.breakPlus.removeEventListener("click", this.breakAdd);
@@ -56,7 +70,19 @@ class Pomodoro {
 
         this.mins = parseInt(this.timer[0].innerHTML) - 1;
 
-        this.minCountdown();
+        await this.minCountdown();
+    };
+
+    resumeTimer = async() => {
+        this.timer[0].removeEventListener("click", this.resumeTimer);
+        this.timer[0].addEventListener("click", this.pauseTimer);
+        await this.minCountdown();
+    };
+
+    pauseTimer = () => {
+        this.timer[0].removeEventListener("click", this.pauseTimer);
+        this.timer[0].addEventListener("click", this.resumeTimer);
+        window.clearTimeout(this.pause);
     };
 
     sessionAdd = () => {
@@ -66,6 +92,10 @@ class Pomodoro {
     };
 
     sessionSub = () => {
+        if (parseInt(this.session[0].innerHTML) === 0) {
+            return;
+        }
+
         let time = parseInt(this.timer[0].innerHTML);
         this.session[0].innerHTML = time - 1;
         this.timer[0].innerHTML = time - 1;
@@ -77,6 +107,10 @@ class Pomodoro {
     };
 
     breakSub = () => {
+        if (parseInt(this.respite[0].innerHTML) === 0) {
+            return;
+        }
+
         let time = parseInt(this.respite[0].innerHTML);
         this.respite[0].innerHTML = time - 1;
     };
