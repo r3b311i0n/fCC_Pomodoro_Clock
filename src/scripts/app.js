@@ -9,6 +9,8 @@ class Pomodoro {
     breakPlus;
     breakMin;
     mins;
+    sessionMinutes;
+    breakMinutes;
     secs = 59;
     pause;
 
@@ -20,6 +22,8 @@ class Pomodoro {
         this.timer = document.getElementsByClassName("timer");
         this.session = document.getElementsByClassName("session");
         this.respite = document.getElementsByClassName("break");
+        this.sessionMinutes = parseInt(this.session[0].innerHTML);
+        this.breakMinutes = parseInt(this.respite[0].innerHTML);
 
         this.sessionPlus.addEventListener("click", this.sessionAdd);
         this.sessionMin.addEventListener("click", this.sessionSub);
@@ -68,7 +72,7 @@ class Pomodoro {
         this.breakPlus.removeEventListener("click", this.breakAdd);
         this.breakMin.removeEventListener("click", this.breakSub);
 
-        this.mins = parseInt(this.timer[0].innerHTML) - 1;
+        this.mins = this.sessionMinutes - 1;
 
         await this.minCountdown();
     };
