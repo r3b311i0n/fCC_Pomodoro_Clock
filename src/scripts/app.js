@@ -14,8 +14,10 @@ class Pomodoro {
     secs = 59;
     pause;
     onBreak = false;
+    logo;
 
     constructor() {
+        this.logo = document.getElementsByClassName("logo");
         this.sessionPlus = document.getElementById("sessionPlus");
         this.sessionMin = document.getElementById("sessionMin");
         this.breakPlus = document.getElementById("breakPlus");
@@ -35,21 +37,23 @@ class Pomodoro {
         if (this.mins < 0) {
             if (!this.onBreak) {
                 this.onBreak = true;
+                this.logo[0].innerHTML = "break!";
                 this.mins = this.breakMinutes - 1;
                 await this.minCountdown();
-                return new Promise();
+                return Promise.resolve();
             }
             else {
                 this.onBreak = false;
+                this.logo[0].innerHTML = "session";
                 this.mins = this.sessionMinutes - 1;
                 await this.minCountdown();
-                return new Promise();
+                return Promise.resolve();
             }
         }
 
-        this.timer[0].innerHTML = this.mins + "." + this.secs;
+        this.timer[0].innerHTML = this.mins + ":" + this.secs;
         await this.secCountdown();
-        return new Promise();
+        return Promise.resolve();
     }
 
     async secCountdown() {
@@ -57,11 +61,11 @@ class Pomodoro {
             this.secs = 59;
             --this.mins;
             await this.minCountdown();
-            return new Promise();
+            return Promise.resolve();
         }
 
-        this.timer[0].innerHTML = this.mins + "." + this.secs;
-        return new Promise(async() => {
+        this.timer[0].innerHTML = this.mins + ":" + this.secs;
+        return new Promise(async(resolve) => {
             this.pause = window.setTimeout(async() => {
                 --this.secs;
                 await this.secCountdown();
@@ -72,8 +76,10 @@ class Pomodoro {
 
     timerClick = async() => {
         if (parseInt(this.timer[0].innerHTML) === 0 || parseInt(this.respite[0].innerHTML) === 0) {
-            return new Promise();
+            return Promise.resolve();
         }
+
+        this.logo[0].innerHTML = "session";
 
         this.sessionMinutes = parseInt(this.session[0].innerHTML);
         this.breakMinutes = parseInt(this.respite[0].innerHTML);
