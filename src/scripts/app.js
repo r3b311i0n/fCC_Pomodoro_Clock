@@ -22,8 +22,6 @@ class Pomodoro {
         this.timer = document.getElementsByClassName("timer");
         this.session = document.getElementsByClassName("session");
         this.respite = document.getElementsByClassName("break");
-        this.sessionMinutes = parseInt(this.session[0].innerHTML);
-        this.breakMinutes = parseInt(this.respite[0].innerHTML);
 
         this.sessionPlus.addEventListener("click", this.sessionAdd);
         this.sessionMin.addEventListener("click", this.sessionSub);
@@ -65,6 +63,8 @@ class Pomodoro {
             return new Promise();
         }
 
+        this.sessionMinutes = parseInt(this.session[0].innerHTML);
+        this.breakMinutes = parseInt(this.respite[0].innerHTML);
         this.timer[0].removeEventListener("click", this.timerClick);
         this.timer[0].addEventListener("click", this.pauseTimer);
         this.sessionPlus.removeEventListener("click", this.sessionAdd);
