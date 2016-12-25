@@ -13,6 +13,7 @@ class Pomodoro {
     breakMinutes;
     secs = 59;
     pause;
+    onBreak = false;
 
     constructor() {
         this.sessionPlus = document.getElementById("sessionPlus");
@@ -32,7 +33,18 @@ class Pomodoro {
 
     async minCountdown() {
         if (this.mins < 0) {
-            return new Promise();
+            if (!this.onBreak) {
+                this.onBreak = true;
+                this.mins = this.breakMinutes - 1;
+                await this.minCountdown();
+                return new Promise();
+            }
+            else {
+                this.onBreak = false;
+                this.mins = this.sessionMinutes - 1;
+                await this.minCountdown();
+                return new Promise();
+            }
         }
 
         this.timer[0].innerHTML = this.mins + "." + this.secs;
@@ -59,7 +71,7 @@ class Pomodoro {
     }
 
     timerClick = async() => {
-        if (parseInt(this.timer[0].innerHTML) === 0) {
+        if (parseInt(this.timer[0].innerHTML) === 0 || parseInt(this.respite[0].innerHTML) === 0) {
             return new Promise();
         }
 
