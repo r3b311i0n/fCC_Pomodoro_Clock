@@ -64,7 +64,11 @@ class Pomodoro {
             return Promise.resolve();
         }
 
-        this.timer[0].innerHTML = this.mins + ":" + this.secs;
+        if (this.secs < 10) {
+            this.timer[0].innerHTML = this.mins + ":0" + this.secs;
+        } else {
+            this.timer[0].innerHTML = this.mins + ":" + this.secs;
+        }
         return new Promise(async(resolve) => {
             this.pause = window.setTimeout(async() => {
                 --this.secs;
@@ -75,10 +79,6 @@ class Pomodoro {
     }
 
     timerClick = async() => {
-        if (parseInt(this.timer[0].innerHTML) === 0 || parseInt(this.respite[0].innerHTML) === 0) {
-            return Promise.resolve();
-        }
-
         this.logo[0].innerHTML = "session";
 
         this.sessionMinutes = parseInt(this.session[0].innerHTML);
@@ -98,12 +98,44 @@ class Pomodoro {
     resumeTimer = async() => {
         this.timer[0].removeEventListener("click", this.resumeTimer);
         this.timer[0].addEventListener("click", this.pauseTimer);
+        this.sessionPlus.removeEventListener("click", this.sessionAdd);
+        this.sessionMin.removeEventListener("click", this.sessionSub);
+        this.breakPlus.removeEventListener("click", this.breakAdd);
+        this.breakMin.removeEventListener("click", this.breakSub);
+
+        if (this.onBreak && this.breakMinutes !== parseInt(this.respite[0].innerHTML)) {
+            this.breakMinutes = parseInt(this.respite[0].innerHTML);
+            this.mins = this.breakMinutes - 1;
+            this.secs = 59;
+        }
+        else if (!this.onBreak) {
+            if (this.sessionMinutes !== parseInt(this.session[0].innerHTML)) {
+                this.sessionMinutes = parseInt(this.session[0].innerHTML);
+                this.breakMinutes = parseInt(this.respite[0].innerHTML);
+                this.mins = this.sessionMinutes - 1;
+                this.secs = 59;
+            }
+            else if (this.breakMinutes !== parseInt(this.respite[0].innerHTML)) {
+                this.breakMinutes = parseInt(this.respite[0].innerHTML);
+            }
+        }
+
         await this.minCountdown();
     };
 
     pauseTimer = () => {
         this.timer[0].removeEventListener("click", this.pauseTimer);
         this.timer[0].addEventListener("click", this.resumeTimer);
+        if (this.onBreak) {
+            this.breakPlus.addEventListener("click", this.breakAdd);
+            this.breakMin.addEventListener("click", this.breakSub);
+        } else {
+            this.sessionPlus.addEventListener("click", this.sessionAdd);
+            this.sessionMin.addEventListener("click", this.sessionSub);
+            this.breakPlus.addEventListener("click", this.breakAdd);
+            this.breakMin.addEventListener("click", this.breakSub);
+        }
+
         window.clearTimeout(this.pause);
     };
 
@@ -114,7 +146,7 @@ class Pomodoro {
     };
 
     sessionSub = () => {
-        if (parseInt(this.session[0].innerHTML) === 0) {
+        if (parseInt(this.session[0].innerHTML) === 1) {
             return;
         }
 
@@ -129,7 +161,7 @@ class Pomodoro {
     };
 
     breakSub = () => {
-        if (parseInt(this.respite[0].innerHTML) === 0) {
+        if (parseInt(this.respite[0].innerHTML) === 1) {
             return;
         }
 
