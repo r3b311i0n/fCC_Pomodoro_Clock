@@ -14,7 +14,7 @@ header .h1 {
 
 footer {
     bottom: 0;
-    position: absolute;
+    position: fixed;
     width: 100%;
     color: #f1f1f1;
 }
